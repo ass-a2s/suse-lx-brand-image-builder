@@ -251,7 +251,7 @@ DOCKERFILE
    #// jump to build_path
    cd "$ADIR"/tmp/build
    #// build the lx-zone bundle
-   tar czfv "$ADIR"/tmp/build/suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz --exclude-from="$ADIR"/exclude_docker_image_files.txt /docker-subvolumes/"$GETDOCKERBTRFS"/
+   tar czf "$ADIR"/tmp/build/suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz --exclude-from="$ADIR"/exclude_docker_image_files.txt /docker-subvolumes/"$GETDOCKERBTRFS"/
    check_hard build: suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz
 fi
 }
