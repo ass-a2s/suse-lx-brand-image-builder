@@ -239,7 +239,7 @@ DOCKERFILE
    #// clone the latest docker build
    GETDOCKERBTRFS=$(ls -t /var/lib/docker/btrfs/subvolumes | awk '{print $1}' | head -n 1)
    btrfs subvolume snapshot /var/lib/docker/btrfs/subvolumes/"$GETDOCKERBTRFS" /docker-subvolumes/"$GETDOCKERBTRFS"
-   check_soft snapshot: docker image - "$GETDOCKERBTRFS"
+   check_soft snapshot: docker image "$GETDOCKERBTRFS"
    #// remove old guesttools files
    rm -rfv /usr/sbin/mdata*
    check_soft remove: old guesttools files
@@ -247,8 +247,12 @@ DOCKERFILE
    cd "$ADIR"/tmp/build/guesttools
    #// install guesttools files
    ./install.sh -i /docker-subvolumes/"$GETDOCKERBTRFS"
-   check_hard install: guesttools files into the docker image - "$GETDOCKERBTRFS"
-
+   check_hard install: guesttools files into the docker image "$GETDOCKERBTRFS"
+   #// jump to build_path
+   cd "$ADIR"/tmp/build
+   #// build the lx-zone bundle
+   tar czfv "$ADIR"/tmp/build/suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz --exclude-from="$ADIR"/exclude_docker_image_files.txt /docker-subvolumes/"$GETDOCKERBTRFS"/
+   check_hard build: suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz
 fi
 }
 
@@ -260,6 +264,8 @@ clone_git
 check_git
 build_suse_sles
 
+echo "" # dummy
+printf "\033[1;32mbuild-suse-zone-bundle finished.\033[0m\n"
 ### ### ### // ASS ### ### ###
 exit 0
 # EOF
