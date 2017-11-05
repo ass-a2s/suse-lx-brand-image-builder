@@ -63,9 +63,9 @@ fi
 check_hard() {
 if [ $? -eq 0 ]
 then
-   echo "[$(printf "\033[1;32m  OK  \033[0m\n")] '"$@"'"
+   echo "[$(printf "\033[1;32m   OK   \033[0m\n")] '"$@"'"
 else
-   echo "[$(printf "\033[1;31mFAILED\033[0m\n")] '"$@"'"
+   echo "[$(printf "\033[1;31m FAILED \033[0m\n")] '"$@"'"
    sleep 1
    exit 1
 fi
@@ -269,6 +269,8 @@ DOCKERFILE
    echo "... build the lx-zone bundle ..."
    (tar czf "$ADIR"/tmp/build/suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz --exclude-from="$ADIR"/exclude_docker_image_files.txt /docker-subvolumes/"$GETDOCKERBTRFS"/) & spinner $!
    check_hard build: suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz
+   #// list files
+   ls -allt "$ADIR"/tmp/build
 fi
 }
 
