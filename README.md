@@ -17,15 +17,20 @@ Current status: **it works**
 * https://us-east.manta.joyent.com/Joyent_Dev/public/SmartOS/smartos.html#20171026T003127Z
 * https://smartos.org/bugview/OS-6326
 
+# SuSE (build environment) Requirements
+
+* SuSE SLES 12 (>SP2) host
+* BTRFS
+
 # Image and manifest creation
 
-* on SuSE Linux Enterprise Server
+* on SuSE Linux Enterprise Server:
 
-Run the `build-suse-zone-bundle.sh` script on a SuSE SLES 12 (>SP2) host.
+Run the `build-suse-zone-bundle.sh` script on a SuSE host.
 
 Copy the `suse-sles-12-sp3-lx-zone-bundle.tar.gz` file to a SmartOS host.
 
-* on SmartOS
+* on SmartOS:
 
 Checkout [this](https://github.com/ass-a2s/debian-lx-brand-image-builder) repository
 and then execute:
