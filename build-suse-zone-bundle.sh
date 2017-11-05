@@ -57,7 +57,7 @@ fi
 }
 
 #// FUNCTION: check state without exit (Version 1.0)
-checksoft() {
+check_soft() {
 if [ $? -eq 0 ]
 then
    echo "[$(printf "\033[1;32m   OK   \033[0m\n")] '"$@"'"
@@ -133,7 +133,7 @@ fi
 build_suse_sles() {
 if [ "$SUSE" = "sles" ]
 then
-   #// jump to current_path
+   #// jump to build_path
    cd "$ADIR"/tmp/build
    #// write the dockerfile
 cat <<DOCKERFILE > "$ADIR"/tmp/build/Dockerfile
@@ -243,8 +243,10 @@ DOCKERFILE
    #// remove old guesttools files
    rm -rfv /usr/sbin/mdata*
    check_soft remove: old guesttools files
+   #// jump to guesttools_path
+   cd "$ADIR"/tmp/build/guesttools
    #// install guesttools files
-   "$ADIR"/tmp/build/guesttools/install.sh -i /docker-subvolumes/"$GETDOCKERBTRFS"
+   ./install.sh -i /docker-subvolumes/"$GETDOCKERBTRFS"
    check_hard install: guesttools files into the docker image - "$GETDOCKERBTRFS"
 
 fi
