@@ -19,11 +19,30 @@ Current status: **it works**
 
 # Image and manifest creation
 
+* on SuSE Linux Enterprise Server
+
 Run the `build-suse-zone-bundle.sh` script on a SuSE SLES 12 (>SP2) host.
 
 Copy the `suse-sles-12-sp3-lx-zone-bundle.tar.gz` file to a SmartOS host.
 
-... more information will comming soon ...
+* on SmartOS
+
+Checkout [this](https://github.com/ass-a2s/debian-lx-brand-image-builder) repository
+and then execute:
+
+```
+./create-lx-image -t /zones/ass.de/test/suse-sles-12-sp3-lx-zone-bundle.tar.gz -k 4.4.0 -m 20171026T003127Z -i ass-suse-sles-12sp3 -d "ASS - SuSE SLES 12 SP3 64-bit lx-brand image." -u https://github.com/ass-a2s/suse-lx-brand-image-builder
+```
+
+This will produce the `.zfs` image and its manifest.
+
+The can be imported via:
+
+```
+imgadm install -m ass-suse-sles-12sp3-20171104.json -f ass-suse-sles-12sp3-20171104.zfs.gz
+```
+
+The names of the image and of the manifest are going to change according to your local time.
 
 # Information
 

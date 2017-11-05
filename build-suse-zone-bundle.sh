@@ -270,6 +270,7 @@ DOCKERFILE
    (tar czf "$ADIR"/tmp/build/suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz --exclude-from="$ADIR"/exclude_docker_image_files.txt /docker-subvolumes/"$GETDOCKERBTRFS"/) & spinner $!
    check_hard build: suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz
    #// list files
+   echo "... list files ..."
    ls -allt "$ADIR"/tmp/build
 fi
 }
