@@ -69,32 +69,32 @@ then
    fi
    #// zypper refresh
    zypper refresh
-   checkhard refresh: zypper
+   check_hard refresh: zypper
    #// install docker
    zypper --non-interactive install docker
-   checkhard install: docker
+   check_hard install: docker
    #// install sle2docker
    zypper --non-interactive install sle2docker
-   checkhard install: sle2docker
+   check_hard install: sle2docker
    #// zypper refresh
    zypper refresh
-   checkhard refresh: zypper
+   check_hard refresh: zypper
    #// start docker
    systemctl start docker
-   checkhard start: docker
+   check_hard start: docker
    #// status docker
    systemctl status docker
-   checkhard status: docker
+   check_hard status: docker
    #// fetch base sles images
    zypper --non-interactive install suse-sles12"$DOCKERVERSION"-image
-   checkhard install: suse-sles12"$DOCKERVERSION"-image
+   check_hard install: suse-sles12"$DOCKERVERSION"-image
    #// activate sles docker image
    GETDOCKERIMAGENAME=$(sle2docker list | grep 'sles12"'$DOCKERVERSION'"' | awk '{print $2}' | head -n 1)
    sle2docker activate "$GETDOCKERIMAGENAME"
-   checkhard activate: docker image suse-sles12"$DOCKERVERSION"-image
+   check_hard activate: docker image suse-sles12"$DOCKERVERSION"-image
    #// list docker images
    docker images
-   checkhard list: docker images
+   check_hard list: docker images
 fi
 }
 
