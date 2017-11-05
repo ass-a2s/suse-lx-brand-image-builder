@@ -49,6 +49,21 @@ The names of the image and of the manifest are going to change according to your
 * https://www.suse.com/documentation/sles-12/singlehtml/book_sles_docker/book_sles_docker.html
 * https://www.suse.com/communities/blog/first-sles-container/
 
+Errata
+======
+
+* 05.11.2017 - IPv6 DNS Resolving Issue (concerns: libzypp, libcurl)
+
+```
+lx-suse-sles-12:/zones/701e9758-1b05-c084-9246-b50e2b59c4a2/data # curl -v http://github.com
+* Rebuilt URL to: http://github.com/
+* Hostname was NOT found in DNS cache
+* Could not resolve host: github.com
+* Closing connection 0
+curl: (6) Could not resolve host: github.com
+lx-suse-sles-12:/zones/701e9758-1b05-c084-9246-b50e2b59c4a2/data #
+```
+
 ASS - pre-built image history
 =============================
 
