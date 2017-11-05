@@ -100,7 +100,7 @@ fi
 
 #// FUNCTION: clone_git (Version 1.0)
 clone_git() {
-git clone https://github.com/ass-a2s/sdc-vmtools-lx-brand "$ADIR"/root/root/guesttools
+git clone https://github.com/ass-a2s/sdc-vmtools-lx-brand "$ADIR"/tmp/build/guesttools
 if [ $? -eq 128 ]
 then
    printf "\033[1;33mWARNING: skips the git repository clone because the directory exists\033[0m\n"
@@ -109,12 +109,11 @@ fi
 
 #// FUNCTION: check_git (Version 1.0)
 check_git() {
-if [ "$(ls -A $ADIR/root/root/guesttools)" ]
+if [ "$(ls -A $ADIR/tmp/build/guesttools)" ]
 then
    : # dummy
 else
-   echo "[$(printf "\033[1;31mFAILED\033[0m\n")] can not find ../root/root/guesttools"
-   sleep 1
+   echo "[$(printf "\033[1;31mFAILED\033[0m\n")] can't find ../tmp/build/guesttools"
    exit 1
 fi
 }
@@ -131,8 +130,8 @@ fi
 
 check_root_user
 prepare_suse_sles
-#/clone_git
-#/check_git
+clone_git
+check_git
 #/build_suse_sles
 
 ### ### ### // ASS ### ### ###
