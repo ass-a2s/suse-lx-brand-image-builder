@@ -67,6 +67,7 @@ lx-suse-sles-12:/zones/701e9758-1b05-c084-9246-b50e2b59c4a2/data # curl -v http:
 * Closing connection 0
 curl: (6) Could not resolve host: github.com
 lx-suse-sles-12:/zones/701e9758-1b05-c084-9246-b50e2b59c4a2/data #
+lx-suse-sles-12:/zones/701e9758-1b05-c084-9246-b50e2b59c4a2/data # ZYPP_MEDIA_CURL_IPRESOLVE=4 yast
 ```
 
 ASS - pre-built image history
