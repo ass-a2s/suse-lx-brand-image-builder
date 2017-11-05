@@ -36,6 +36,21 @@ DOCKERVERSION=$(grep -s "^VERSION=" /etc/os-release | sed 's/VERSION="12-//g' | 
 
 ADIR="$PWD"
 
+#// FUNCTION: spinner (Version 1.0)
+spinner() {
+   local pid=$1
+   local delay=0.01
+   local spinstr='|/-\'
+   while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+         local temp=${spinstr#?}
+         printf " [%c]  " "$spinstr"
+         local spinstr=$temp${spinstr%"$temp"}
+         sleep $delay
+         printf "\b\b\b\b\b\b"
+   done
+   printf "    \b\b\b\b"
+}
+
 #// FUNCTION: run script as root (Version 1.0)
 check_root_user() {
 if [ "$(id -u)" != "0" ]; then
@@ -251,7 +266,8 @@ DOCKERFILE
    #// jump to build_path
    cd "$ADIR"/tmp/build
    #// build the lx-zone bundle
-   tar czf "$ADIR"/tmp/build/suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz --exclude-from="$ADIR"/exclude_docker_image_files.txt /docker-subvolumes/"$GETDOCKERBTRFS"/
+   echo "... build the lx-zone bundle ..."
+   (tar czf "$ADIR"/tmp/build/suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz --exclude-from="$ADIR"/exclude_docker_image_files.txt /docker-subvolumes/"$GETDOCKERBTRFS"/) & spinner $!
    check_hard build: suse-sles-12-"$DOCKERVERSION"-lx-zone-bundle.tar.gz
 fi
 }
