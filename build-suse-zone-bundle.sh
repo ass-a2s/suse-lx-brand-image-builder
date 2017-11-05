@@ -103,7 +103,7 @@ clone_git() {
 git clone https://github.com/ass-a2s/sdc-vmtools-lx-brand "$ADIR"/tmp/build/guesttools
 if [ $? -eq 128 ]
 then
-   printf "\033[1;33mWARNING: skips the git repository clone because the directory exists\033[0m\n"
+   printf "\033[1;33mWARNING:\033[0m\n skip the git repository clone because the directory already exists!"
 fi
 }
 
@@ -122,7 +122,107 @@ fi
 build_suse_sles() {
 if [ "$SUSE" = "sles" ]
 then
-   : # dummy
+   #// jump to current_path
+   cd "$ADIR"/tmp/build
+   #// write the dockerfile
+cat <<DOCKERFILE > "$ADIR"/tmp/build/Dockerfile
+FROM suse/sles12sp3
+MAINTAINER "Daniel Plominski <dpl@ass.de>"
+
+# The ADD command adds files from your directory into the new image
+#/ADD *.repo /etc/zypp/repos.d/
+#/ADD *.service /etc/zypp/services.d/
+
+#/ENV container docker
+#/VOLUME [ “/sys/fs/cgroup” ]
+
+RUN zypper refs && zypper refresh
+
+RUN zypper --non-interactive install acl \
+    dracut \
+    elfutils \
+    filesystem \
+    fipscheck \
+    glibc-locale \
+    ncurses-utils \
+    pkg-config \
+       ca-certificates \
+       ca-certificates-mozilla \
+       coreutils \
+       diffutils \
+       pwdutils \
+       suse-build-key \
+       sles-release \
+       perl-base \
+       insserv-compat \
+       bash \
+       vim \
+       less \
+       fillup \
+       permissions \
+       pam \
+       rpm \
+       sed \
+       grep \
+       tar \
+       strace \
+       iputils \
+       netcfg \
+       net-tools \
+       iproute2 \
+       tcpdump \
+       nscd \
+       curl \
+       openssh \
+       autoyast2-installation \
+       yast2 \
+       yast2-add-on \
+       yast2-auth-client \
+       yast2-bootloader \
+       yast2-branding-SLE \
+       yast2-core \
+       yast2-country \
+       yast2-country-data \
+       yast2-inetd \
+       yast2-installation \
+       yast2-journal \
+       yast2-ldap \
+       yast2-mail \
+       yast2-metapackage-handler \
+       yast2-network \
+       yast2-nfs-client \
+       yast2-nfs-common \
+       yast2-nis-client \
+       yast2-ntp-client \
+       yast2-online-update \
+       yast2-online-update-frontend \
+       yast2-online-update-configuration \
+       yast2-registration \
+       yast2-packager \
+       yast2-pam \
+       yast2-perl-bindings \
+       yast2-pkg-bindings \
+       yast2-proxy \
+       yast2-ruby-bindings \
+       yast2-samba-client \
+       yast2-security \
+       yast2-services-manager \
+       yast2-sudo \
+       yast2-sysconfig \
+       yast2-trans-stats \
+       yast2-transfer \
+       yast2-update \
+       yast2-users \
+       yast2-vpn \
+       yast2-xml \
+       yast2-ycp-ui-bindings \
+       hwinfo
+DOCKERFILE
+   check_hard write: the dockerfile
+   #// build the docker image
+   docker build -t ass/sles12sp3:latest .
+   check_hard build: the docker image
+
 fi
 }
 
@@ -132,7 +232,7 @@ check_root_user
 prepare_suse_sles
 clone_git
 check_git
-#/build_suse_sles
+build_suse_sles
 
 ### ### ### // ASS ### ### ###
 exit 0
