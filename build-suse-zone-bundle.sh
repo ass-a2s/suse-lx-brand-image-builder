@@ -56,6 +56,17 @@ else
 fi
 }
 
+#// FUNCTION: check state without exit (Version 1.0)
+checksoft() {
+if [ $? -eq 0 ]
+then
+   echo "[$(printf "\033[1;32m   OK   \033[0m\n")] '"$@"'"
+else
+   echo "[$(printf "\033[1;33m FAILED \033[0m\n")] '"$@"'"
+   sleep 1
+fi
+}
+
 #// FUNCTION: prepare_suse_sles (Version 1.0)
 prepare_suse_sles() {
 if [ "$SUSE" = "sles" ]
@@ -222,6 +233,19 @@ DOCKERFILE
    #// build the docker image
    docker build -t ass/sles12sp3:latest .
    check_hard build: the docker image
+   #// btrfs subvolume create
+   btrfs subvolume create /docker-subvolumes
+   check_soft create: btrfs subvolume /docker-subvolumes
+   #// clone the latest docker build
+   GETDOCKERBTRFS=$(ls -t /var/lib/docker/btrfs/subvolumes | awk '{print $1}' | head -n 1)
+   btrfs subvolume snapshot /var/lib/docker/btrfs/subvolumes/"$GETDOCKERBTRFS" /docker-subvolumes/"$GETDOCKERBTRFS"
+   check_soft snapshot: docker image - "$GETDOCKERBTRFS"
+   #// remove old guesttools files
+   rm -rfv /usr/sbin/mdata*
+   check_soft remove: old guesttools files
+   #// install guesttools files
+   "$ADIR"/tmp/build/guesttools/install.sh -i /docker-subvolumes/"$GETDOCKERBTRFS"
+   check_hard install: guesttools files into the docker image - "$GETDOCKERBTRFS"
 
 fi
 }
