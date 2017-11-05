@@ -246,7 +246,7 @@ RUN zypper --non-interactive install acl \
 DOCKERFILE
    check_hard write: the dockerfile
    #// build the docker image
-   docker build -t ass/sles12sp3:latest .
+   docker build -t ass/sles12"$DOCKERVERSION":latest .
    check_hard build: the docker image
    #// btrfs subvolume create
    btrfs subvolume create /docker-subvolumes
@@ -256,7 +256,7 @@ DOCKERFILE
    btrfs subvolume snapshot /var/lib/docker/btrfs/subvolumes/"$GETDOCKERBTRFS" /docker-subvolumes/"$GETDOCKERBTRFS"
    check_soft snapshot: docker image "$GETDOCKERBTRFS"
    #// remove old guesttools files
-   rm -rfv /usr/sbin/mdata*
+   rm -rf /usr/sbin/mdata*
    check_soft remove: old guesttools files
    #// jump to guesttools_path
    cd "$ADIR"/tmp/build/guesttools
