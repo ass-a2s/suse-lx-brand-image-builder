@@ -19,7 +19,7 @@ Current status: **it works**
 
 # SuSE (build environment) Requirements
 
-* SuSE SLES 12 (>SP2) host
+* SuSE SLES 12 (> SP2) HOST
 * BTRFS
 
 # Image and manifest creation
