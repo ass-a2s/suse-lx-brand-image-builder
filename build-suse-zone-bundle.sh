@@ -91,7 +91,7 @@ then
    #// activate sles docker image
    GETDOCKERIMAGENAME=$(sle2docker list | grep 'sles12"'$DOCKERVERSION'"' | awk '{print $2}' | head -n 1)
    sle2docker activate "$GETDOCKERIMAGENAME"
-   check_hard activate: docker image suse-sles12"$DOCKERVERSION"-image
+   check_hard activate: docker image "$GETDOCKERIMAGENAME"
    #// list docker images
    docker images
    check_hard list: docker images
